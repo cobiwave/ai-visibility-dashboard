@@ -1,0 +1,27 @@
+{
+  "Metadata": {
+    "title": "AI Visibility Dashboard",
+    "description": "A demo dashboard for AI search visibility."
+  },
+  "LocaleSwitcher": {
+    "label": "Language"
+  },
+  "Dashboard": {
+    "title": "Overview",
+    "placeholder": "Visibility metrics for Northwind Coffee will appear here."
+  },
+  "Tokens": {
+    "eyebrow": "AI Visibility Dashboard",
+    "title": "Design token preview",
+    "intro": "Dark-first color, typography, spacing, radius, shadow, and motion tokens.",
+    "colors": "Colors",
+    "typography": "Typography",
+    "sample": "Northwind Coffee is visible across answer engines.",
+    "spacing": "Spacing · 4px base",
+    "shape": "Radius and shadow",
+    "radius": "Radius",
+    "shadow": "Shadow",
+    "motion": "Motion · ease-out-quart",
+    "motionHint": "Hover a box. Motion is disabled when the OS asks for reduced motion."
+  }
+}
