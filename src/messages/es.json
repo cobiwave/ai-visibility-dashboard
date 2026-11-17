@@ -7,8 +7,12 @@
     "label": "Idioma"
   },
   "Dashboard": {
-    "title": "Resumen",
-    "placeholder": "Acá van a aparecer las métricas de visibilidad de Northwind Coffee."
+    "appName": "AI Visibility",
+    "nav": {
+      "label": "Panel",
+      "overview": "Resumen",
+      "prompts": "Prompts"
+    }
   },
   "Tokens": {
     "eyebrow": "Panel de visibilidad en IA",
@@ -23,5 +27,31 @@
     "shadow": "Sombra",
     "motion": "Movimiento · ease-out-quart",
     "motionHint": "Pasá el mouse sobre una caja. El movimiento se desactiva si el sistema pide movimiento reducido."
+  },
+  "Overview": {
+    "title": "Resumen",
+    "generatedAt": "Datos generados el {time}",
+    "kpis": {
+      "visibilityScore": "Puntaje de visibilidad",
+      "shareOfVoice": "Share of voice",
+      "avgPosition": "Posición promedio",
+      "positiveSentiment": "Sentimiento positivo",
+      "vsLastWeek": "vs. hace 7 días",
+      "ofMentions": "de las menciones de la marca",
+      "percentagePoints": "{value} p. p.",
+      "better": "mejor",
+      "worse": "peor",
+      "flat": "sin cambios",
+      "empty": "–"
+    },
+    "chart": {
+      "title": "Visibilidad a lo largo del tiempo",
+      "description": "Puntaje de visibilidad diario por motor del {start} al {end}, en una escala de 0 a 100. Últimos valores: {latest}."
+    },
+    "engines": {
+      "title": "Por motor",
+      "details": "{shareOfVoice} de share of voice · posición promedio {position}",
+      "notRanked": "–"
+    }
   }
 }

@@ -29,6 +29,26 @@ export function formatDate(date: Date | string, locale: Locale): string {
   );
 }
 
+/** 4.25 → "+4.3", -0.5 → "-0.5", 0 → "0". For KPI deltas. */
+export function formatSignedNumber(value: number, locale: Locale): string {
+  return new Intl.NumberFormat(locale, {
+    maximumFractionDigits: 1,
+    signDisplay: 'exceptZero',
+  }).format(value);
+}
+
+/**
+ * Date and time with seconds, in UTC so the server-rendered text is the same
+ * for every visitor: "Nov 17, 2026, 12:00:00 PM UTC".
+ */
+export function formatDateTime(date: Date | string, locale: Locale): string {
+  return new Intl.DateTimeFormat(locale, {
+    dateStyle: 'medium',
+    timeStyle: 'long',
+    timeZone: 'UTC',
+  }).format(new Date(date));
+}
+
 const SECOND_MS = 1000;
 const UNITS: { unit: Intl.RelativeTimeFormatUnit; ms: number }[] = [
   { unit: 'year', ms: 365 * 24 * 60 * 60 * SECOND_MS },

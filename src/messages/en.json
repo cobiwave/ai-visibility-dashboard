@@ -7,8 +7,12 @@
     "label": "Language"
   },
   "Dashboard": {
-    "title": "Overview",
-    "placeholder": "Visibility metrics for Northwind Coffee will appear here."
+    "appName": "AI Visibility",
+    "nav": {
+      "label": "Dashboard",
+      "overview": "Overview",
+      "prompts": "Prompts"
+    }
   },
   "Tokens": {
     "eyebrow": "AI Visibility Dashboard",
@@ -23,5 +27,31 @@
     "shadow": "Shadow",
     "motion": "Motion · ease-out-quart",
     "motionHint": "Hover a box. Motion is disabled when the OS asks for reduced motion."
+  },
+  "Overview": {
+    "title": "Overview",
+    "generatedAt": "Data generated at {time}",
+    "kpis": {
+      "visibilityScore": "Visibility score",
+      "shareOfVoice": "Share of voice",
+      "avgPosition": "Avg. position",
+      "positiveSentiment": "Positive sentiment",
+      "vsLastWeek": "vs. 7 days ago",
+      "ofMentions": "of brand mentions",
+      "percentagePoints": "{value} pp",
+      "better": "better",
+      "worse": "worse",
+      "flat": "no change",
+      "empty": "–"
+    },
+    "chart": {
+      "title": "Visibility score over time",
+      "description": "Daily visibility score per engine from {start} to {end}, on a 0 to 100 scale. Latest values: {latest}."
+    },
+    "engines": {
+      "title": "By engine",
+      "details": "{shareOfVoice} share of voice · avg. position {position}",
+      "notRanked": "–"
+    }
   }
 }
