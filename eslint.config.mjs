@@ -55,7 +55,8 @@ const eslintConfig = defineConfig([
   },
   {
     files: ['src/**/*.{ts,tsx}'],
-    ignores: ['src/app/**'],
+    // next-intl requires a default export from its request config.
+    ignores: ['src/app/**', 'src/i18n/request.ts'],
     rules: {
       'no-restricted-syntax': [
         'error',

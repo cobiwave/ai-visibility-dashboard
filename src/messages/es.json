@@ -1,0 +1,27 @@
+{
+  "Metadata": {
+    "title": "Panel de visibilidad en IA",
+    "description": "Un panel de demostración de visibilidad en buscadores con IA."
+  },
+  "LocaleSwitcher": {
+    "label": "Idioma"
+  },
+  "Dashboard": {
+    "title": "Resumen",
+    "placeholder": "Acá van a aparecer las métricas de visibilidad de Northwind Coffee."
+  },
+  "Tokens": {
+    "eyebrow": "Panel de visibilidad en IA",
+    "title": "Vista previa de tokens de diseño",
+    "intro": "Tokens de color, tipografía, espaciado, radios, sombras y movimiento, pensados primero para modo oscuro.",
+    "colors": "Colores",
+    "typography": "Tipografía",
+    "sample": "Northwind Coffee aparece en los motores de respuesta.",
+    "spacing": "Espaciado · base de 4px",
+    "shape": "Radios y sombras",
+    "radius": "Radio",
+    "shadow": "Sombra",
+    "motion": "Movimiento · ease-out-quart",
+    "motionHint": "Pasá el mouse sobre una caja. El movimiento se desactiva si el sistema pide movimiento reducido."
+  }
+}

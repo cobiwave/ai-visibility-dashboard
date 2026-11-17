@@ -1,3 +1,5 @@
+import { getTranslations } from 'next-intl/server';
+
 const colorTokens = [
   { name: 'surface-0', className: 'bg-surface-0' },
   { name: 'surface-1', className: 'bg-surface-1' },
@@ -44,20 +46,20 @@ const motionTokens = [
   { name: 'duration-slow · 400ms', className: 'motion-safe:duration-slow' },
 ] as const;
 
-export default function TokensPage() {
+export default async function TokensPage() {
+  const t = await getTranslations('Tokens');
+
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 py-12">
       <header className="flex flex-col gap-2">
-        <p className="text-accent text-sm font-medium">AI Visibility Dashboard</p>
-        <h1 className="text-3xl font-semibold">Design token preview</h1>
-        <p className="text-text-muted">
-          Dark-first color, typography, spacing, radius, shadow, and motion tokens.
-        </p>
+        <p className="text-accent text-sm font-medium">{t('eyebrow')}</p>
+        <h1 className="text-3xl font-semibold">{t('title')}</h1>
+        <p className="text-text-muted">{t('intro')}</p>
       </header>
 
       <section aria-labelledby="colors-heading" className="flex flex-col gap-4">
         <h2 className="text-xl font-semibold" id="colors-heading">
-          Colors
+          {t('colors')}
         </h2>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
           {colorTokens.map((token) => (
@@ -74,12 +76,12 @@ export default function TokensPage() {
 
       <section aria-labelledby="type-heading" className="flex flex-col gap-4">
         <h2 className="text-xl font-semibold" id="type-heading">
-          Typography
+          {t('typography')}
         </h2>
         <div className="border-border bg-surface-1 flex flex-col gap-3 rounded-lg border p-5">
           {typeTokens.map((token) => (
             <p className={token.className} key={token.name}>
-              {token.name} — Northwind Coffee is visible across answer engines.
+              {token.name} — {t('sample')}
             </p>
           ))}
           <p className="text-text-muted font-mono text-sm">Geist Mono · 0123456789</p>
@@ -88,7 +90,7 @@ export default function TokensPage() {
 
       <section aria-labelledby="spacing-heading" className="flex flex-col gap-4">
         <h2 className="text-xl font-semibold" id="spacing-heading">
-          Spacing · 4px base
+          {t('spacing')}
         </h2>
         <div className="border-border bg-surface-1 flex flex-wrap items-start gap-3 rounded-lg border p-5">
           {spacingTokens.map((token) => (
@@ -104,24 +106,22 @@ export default function TokensPage() {
 
       <section aria-labelledby="shape-heading" className="flex flex-col gap-4">
         <h2 className="text-xl font-semibold" id="shape-heading">
-          Radius and shadow
+          {t('shape')}
         </h2>
         <div className="grid gap-4 sm:grid-cols-3">
-          <div className="border-border bg-surface-1 rounded-sm border p-4">Radius · sm</div>
-          <div className="border-border bg-surface-1 rounded-md border p-4">Radius · md</div>
-          <div className="border-border bg-surface-1 rounded-lg border p-4">Radius · lg</div>
-          <div className="bg-surface-1 shadow-card rounded-md p-4">Shadow · card</div>
-          <div className="bg-surface-1 shadow-popover rounded-md p-4">Shadow · popover</div>
+          <div className="border-border bg-surface-1 rounded-sm border p-4">{t('radius')} · sm</div>
+          <div className="border-border bg-surface-1 rounded-md border p-4">{t('radius')} · md</div>
+          <div className="border-border bg-surface-1 rounded-lg border p-4">{t('radius')} · lg</div>
+          <div className="bg-surface-1 shadow-card rounded-md p-4">{t('shadow')} · card</div>
+          <div className="bg-surface-1 shadow-popover rounded-md p-4">{t('shadow')} · popover</div>
         </div>
       </section>
 
       <section aria-labelledby="motion-heading" className="flex flex-col gap-4">
         <h2 className="text-xl font-semibold" id="motion-heading">
-          Motion · ease-out-quart
+          {t('motion')}
         </h2>
-        <p className="text-text-muted text-sm">
-          Hover a box. Motion is disabled when the OS asks for reduced motion.
-        </p>
+        <p className="text-text-muted text-sm">{t('motionHint')}</p>
         <div className="grid gap-4 sm:grid-cols-3">
           {motionTokens.map((token) => (
             <div
