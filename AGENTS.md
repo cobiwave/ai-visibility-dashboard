@@ -12,8 +12,9 @@ completeness.
 
 ## 1. Working rules (non-negotiable)
 
-1. **One milestone per session.** Only work on the milestone named in the
-   kickoff prompt. Don't start the next one, even if you finish early.
+1. **One scope per session.** Only do what the kickoff prompt names (one
+   milestone, or one session from SPEC §0). Don't start the next one, even if
+   you finish early. SPEC §0 overrides the milestone list while it exists.
 2. **Stop when the acceptance criteria pass.** No bonus features, no
    "while I was here" refactors. List ideas under *Follow-ups* in your report
    instead.

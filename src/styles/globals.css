@@ -52,6 +52,22 @@
   --duration-slow: 400ms;
 }
 
+/*
+ * Tailwind v4 has no theme namespace for durations, so --duration-* tokens
+ * don't generate utilities on their own. These map the tokens to classes.
+ */
+@utility duration-fast {
+  transition-duration: var(--duration-fast);
+}
+
+@utility duration-base {
+  transition-duration: var(--duration-base);
+}
+
+@utility duration-slow {
+  transition-duration: var(--duration-slow);
+}
+
 :root {
   color-scheme: dark;
   background: var(--color-surface-0);

@@ -6,6 +6,32 @@
 > Frontend interview.
 
 **Budget:** 8 milestones, roughly 7–9 working days, plus 1 optional.
+
+---
+
+## 0. THURSDAY MVP: this section overrides the rest of the spec
+
+The interview is **Thursday 13:00 (Canary time)**. Code freezes **Wednesday
+night**. Thursday morning is for rehearsing, not building.
+
+**In scope, in this order:**
+
+| Session | Content | Budget |
+|---|---|---|
+| A | M1 fixes, M2 data layer, **M3-lite** i18n (routing, `setRequestLocale`, `format.ts`, only the strings that exist so far), first Vercel deploy | Tue, ~3h |
+| B | M4 Overview (`'use cache'`, tags, webhook) + M5 Prompts (React Query: prefetch/hydrate, filters, pagination, polling, optimistic ★) | Wed morning, ~4h |
+| C | M6 Detail (SSG top 20, grid-rows accordion, reduced motion, `next/image`) + **M8-lite** (README with the rendering table, caching, trade-offs and one Lighthouse run on the production URL) | Wed afternoon, ~3h |
+
+**Cut. Explain these verbally if asked, don't build them:**
+- Landing page, GSAP hero, R3F. `/[locale]` redirects to `/[locale]/dashboard`.
+  SSG is demonstrated by the detail pages instead.
+- M7 pixel-perfect Figma pass. The tokens and wireframe exist; describe the
+  process you'd follow.
+- Bundle analyzer and Web Vitals reporting. One Lighthouse run is enough.
+- Fonts stay on Google Fonts (they work on Vercel; local fonts were a nice-to-have).
+
+**Rule:** if a session runs over budget, cut polish, not explanation.
+Every shipped feature needs a trade-off in the README.
 **Principle:** boring, explainable choices. Every decision below has a trade-off
 you can say out loud.
 
@@ -188,7 +214,7 @@ src/
     en.json  es.json
   styles/
     globals.css                  # @theme tokens
-proxy.ts                         # next-intl locale routing (Next 16 name for middleware)
+  proxy.ts                       # next-intl locale routing (Next 16 name for middleware; inside src/ because the app uses a src folder)
 ```
 
 **Rules:**
