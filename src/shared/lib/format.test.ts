@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { formatDate, formatNumber, formatPercent, formatRelativeTime } from './format';
+import {
+  formatDate,
+  formatDateTime,
+  formatNumber,
+  formatPercent,
+  formatRelativeTime,
+  formatSignedNumber,
+} from './format';
 
 // Spanish Intl output uses a non-breaking space (U+00A0): "31,4 %", "12,3 mil".
 const NBSP = ' ';
@@ -49,5 +56,21 @@ describe('formatRelativeTime', () => {
   it('falls back to seconds and handles the future', () => {
     expect(formatRelativeTime(new Date(now - 30_000), 'en', now)).toBe('30 seconds ago');
     expect(formatRelativeTime(new Date(now + 3 * 60_000), 'es', now)).toBe('dentro de 3 minutos');
+  });
+});
+
+describe('formatSignedNumber', () => {
+  it('always shows the sign except for zero', () => {
+    expect(formatSignedNumber(4.25, 'en')).toBe('+4.3');
+    expect(formatSignedNumber(-0.5, 'es')).toBe('-0,5');
+    expect(formatSignedNumber(0, 'en')).toBe('0');
+  });
+});
+
+describe('formatDateTime', () => {
+  it('formats in UTC with seconds', () => {
+    expect(formatDateTime('2026-11-17T12:00:05.000Z', 'en')).toContain('12:00:05');
+    expect(formatDateTime('2026-11-17T12:00:05.000Z', 'en')).toContain('UTC');
+    expect(formatDateTime('2026-11-17T12:00:05.000Z', 'es')).toContain('17 nov 2026');
   });
 });

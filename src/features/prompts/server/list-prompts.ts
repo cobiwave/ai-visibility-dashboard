@@ -1,5 +1,6 @@
 import 'server-only';
 
+import { connection } from 'next/server';
 import type { Paginated, Prompt, PromptFilters, PromptRow } from '@/features/prompts/types';
 import { getAnswers, getPrompts, sleep } from '@/server/db';
 import { SENTIMENTS, type EngineId, type Sentiment } from '@/shared/config/domain';
@@ -83,7 +84,13 @@ export function queryPrompts(
   };
 }
 
+/**
+ * Uncached on purpose: `tracked` is live, mutable state. `connection()` tells
+ * Next this is request-time data, so prerendering stops here instead of
+ * hitting the mock latency's Math.random() and failing.
+ */
 export async function listPrompts(filters: PromptFilters): Promise<Paginated<PromptRow>> {
+  await connection();
   await sleep();
   return queryPrompts(getPrompts(), getAnswers(), filters);
 }

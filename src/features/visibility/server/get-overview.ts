@@ -1,5 +1,6 @@
 import 'server-only';
 
+import { cacheLife, cacheTag } from 'next/cache';
 import type {
   Brand,
   DailyMetric,
@@ -9,6 +10,7 @@ import type {
   Overview,
 } from '@/features/visibility/types';
 import { getAnswers, getBrand, getMetrics, sleep } from '@/server/db';
+import { cacheTags } from '@/shared/config/cache-tags';
 import { ENGINE_IDS, type Sentiment } from '@/shared/config/domain';
 
 const DELTA_DAYS = 7;
@@ -35,6 +37,7 @@ export function buildOverview(
   brand: Brand,
   metrics: DailyMetric[],
   sentiments: (Sentiment | null)[],
+  generatedAt: string,
 ): Overview {
   const dates = [...new Set(metrics.map((metric) => metric.date))].sort();
   const latestDate = dates.at(-1);
@@ -74,14 +77,28 @@ export function buildOverview(
     },
     series,
     engines,
+    generatedAt,
   };
 }
 
-export async function getOverview(): Promise<Overview> {
+/**
+ * ISR in Cache Components terms: the result is cached per `brandId` (it is an
+ * argument, so it's part of the cache key), served stale after an hour while it
+ * regenerates in the background, and can be invalidated on demand by tag from
+ * the revalidate webhook. Nothing here reads the request or translations, so
+ * the entry is the same for every locale and visitor.
+ */
+export async function getOverview(brandId: string): Promise<Overview> {
+  'use cache';
+  cacheLife('hours');
+  cacheTag(cacheTags.metrics(brandId));
+
   await sleep();
+  // The mock store only holds one brand; a real query would filter by brandId.
   return buildOverview(
     getBrand(),
     getMetrics(),
     getAnswers().map((answer) => answer.sentiment),
+    new Date().toISOString(),
   );
 }
