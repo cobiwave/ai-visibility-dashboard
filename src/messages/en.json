@@ -116,5 +116,28 @@
       "toggleFailed": "Couldn't update “{prompt}”. Your change was undone.",
       "dismiss": "Dismiss"
     }
+  },
+  "PromptDetail": {
+    "back": "All prompts",
+    "tracked": "Tracked",
+    "notTracked": "Not tracked",
+    "answersLabel": "Answers by engine",
+    "answer": {
+      "mentioned": "Mentioned",
+      "yes": "Yes",
+      "no": "No",
+      "position": "Position",
+      "positionValue": "#{position}",
+      "sentiment": "Sentiment",
+      "none": "–",
+      "fullAnswer": "Full answer",
+      "citations": "Citations",
+      "ownDomain": "your site"
+    },
+    "notFound": {
+      "title": "Prompt not found",
+      "body": "This prompt doesn't exist or is no longer tracked.",
+      "back": "Back to all prompts"
+    }
   }
 }

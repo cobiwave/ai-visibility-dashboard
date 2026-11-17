@@ -12,16 +12,10 @@ import { usePrompts } from '@/features/prompts/queries/use-prompts';
 import { useToggleTracked } from '@/features/prompts/queries/use-toggle-tracked';
 import type { PromptRow } from '@/features/prompts/types';
 import { Link } from '@/i18n/navigation';
-import type { Sentiment } from '@/shared/config/domain';
 import { cn } from '@/shared/lib/cn';
 import { formatNumber } from '@/shared/lib/format';
+import { SENTIMENT_TEXT_COLOR } from '@/shared/ui/sentiment-color';
 import { Toast, type ToastMessage } from '@/shared/ui/Toast';
-
-const SENTIMENT_COLOR: Record<Sentiment, string> = {
-  positive: 'text-success',
-  neutral: 'text-warning',
-  negative: 'text-danger',
-};
 
 export function PromptsTable() {
   const t = useTranslations('Prompts');
@@ -94,7 +88,7 @@ export function PromptsTable() {
                 aria-hidden
                 className={cn(
                   'size-2 rounded-full bg-current',
-                  SENTIMENT_COLOR[row.dominantSentiment],
+                  SENTIMENT_TEXT_COLOR[row.dominantSentiment],
                 )}
               />
               {tSentiments(row.dominantSentiment)}

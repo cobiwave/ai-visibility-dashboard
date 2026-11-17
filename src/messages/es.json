@@ -116,5 +116,28 @@
       "toggleFailed": "No se pudo actualizar “{prompt}”. Se deshizo el cambio.",
       "dismiss": "Cerrar"
     }
+  },
+  "PromptDetail": {
+    "back": "Todos los prompts",
+    "tracked": "Seguido",
+    "notTracked": "Sin seguir",
+    "answersLabel": "Respuestas por motor",
+    "answer": {
+      "mentioned": "Mencionada",
+      "yes": "Sí",
+      "no": "No",
+      "position": "Posición",
+      "positionValue": "#{position}",
+      "sentiment": "Sentimiento",
+      "none": "–",
+      "fullAnswer": "Respuesta completa",
+      "citations": "Citas",
+      "ownDomain": "tu sitio"
+    },
+    "notFound": {
+      "title": "Prompt no encontrado",
+      "body": "Este prompt no existe o ya no se sigue.",
+      "back": "Volver a todos los prompts"
+    }
   }
 }

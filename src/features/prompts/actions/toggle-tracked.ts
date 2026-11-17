@@ -40,6 +40,8 @@ export async function toggleTracked(input: {
   // Read-your-own-writes for anything cached under this tag: the next read
   // blocks on fresh data instead of serving stale.
   updateTag(cacheTags.prompts(DEMO_BRAND_ID));
+  // The detail page shows the ★ too, from its own cached entry.
+  updateTag(cacheTags.prompt(prompt.id));
 
   return { ok: true, promptId: prompt.id, tracked: prompt.tracked };
 }

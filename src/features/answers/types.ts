@@ -27,6 +27,7 @@ export interface PromptSummary {
   id: string;
   text: Record<Locale, string>;
   topic: Topic;
+  tracked: boolean;
 }
 
 export interface PromptWithAnswers {
