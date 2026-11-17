@@ -53,5 +53,67 @@
       "details": "{shareOfVoice} de share of voice · posición promedio {position}",
       "notRanked": "–"
     }
+  },
+  "Topics": {
+    "subscription": "Suscripción",
+    "specialty": "Especialidad",
+    "price": "Precio",
+    "delivery": "Envíos",
+    "brand": "Marca"
+  },
+  "Sentiments": {
+    "positive": "Positivo",
+    "neutral": "Neutral",
+    "negative": "Negativo"
+  },
+  "Prompts": {
+    "title": "Prompts",
+    "subtitle": "Preguntas que la gente le hace a los motores de IA, y si {brand} aparece en las respuestas.",
+    "filters": {
+      "label": "Filtrar prompts",
+      "engine": "Motor",
+      "topic": "Tema",
+      "mentioned": "Mencionada",
+      "all": "Todos",
+      "allEngines": "Todos los motores",
+      "yes": "Sí",
+      "no": "No"
+    },
+    "table": {
+      "caption": "Prompts monitoreados",
+      "track": "Seguir",
+      "prompt": "Prompt",
+      "topic": "Tema",
+      "mentions": "Menciones",
+      "position": "Pos. prom.",
+      "sentiment": "Sentimiento",
+      "mentionsValue": "{count}/{total}",
+      "none": "–",
+      "empty": "Ningún prompt coincide con estos filtros.",
+      "loadFailed": "No se pudieron cargar los prompts. Probá de nuevo en un momento.",
+      "trackLabel": "Seguir “{prompt}”",
+      "updating": "Actualizando resultados…"
+    },
+    "pagination": {
+      "label": "Paginación",
+      "previous": "Página anterior",
+      "next": "Página siguiente",
+      "page": "Página {page}",
+      "summary": "{from}–{to} de {total}"
+    },
+    "scan": {
+      "run": "Ejecutar escaneo",
+      "starting": "Iniciando…",
+      "queued": "Escaneo en cola",
+      "running": "Escaneando… {progress}",
+      "done": "Escaneo completo. Resultados actualizados.",
+      "failed": "El escaneo falló.",
+      "startFailed": "No se pudo iniciar el escaneo.",
+      "progressLabel": "Progreso del escaneo"
+    },
+    "toast": {
+      "toggleFailed": "No se pudo actualizar “{prompt}”. Se deshizo el cambio.",
+      "dismiss": "Cerrar"
+    }
   }
 }

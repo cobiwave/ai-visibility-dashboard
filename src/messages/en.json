@@ -53,5 +53,67 @@
       "details": "{shareOfVoice} share of voice · avg. position {position}",
       "notRanked": "–"
     }
+  },
+  "Topics": {
+    "subscription": "Subscription",
+    "specialty": "Specialty",
+    "price": "Price",
+    "delivery": "Delivery",
+    "brand": "Brand"
+  },
+  "Sentiments": {
+    "positive": "Positive",
+    "neutral": "Neutral",
+    "negative": "Negative"
+  },
+  "Prompts": {
+    "title": "Prompts",
+    "subtitle": "Questions people ask AI engines, and whether {brand} shows up in the answers.",
+    "filters": {
+      "label": "Filter prompts",
+      "engine": "Engine",
+      "topic": "Topic",
+      "mentioned": "Mentioned",
+      "all": "All",
+      "allEngines": "All engines",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "table": {
+      "caption": "Tracked prompts",
+      "track": "Track",
+      "prompt": "Prompt",
+      "topic": "Topic",
+      "mentions": "Mentions",
+      "position": "Avg. pos.",
+      "sentiment": "Sentiment",
+      "mentionsValue": "{count}/{total}",
+      "none": "–",
+      "empty": "No prompts match these filters.",
+      "loadFailed": "Couldn't load prompts. Try again in a moment.",
+      "trackLabel": "Track “{prompt}”",
+      "updating": "Updating results…"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "previous": "Previous page",
+      "next": "Next page",
+      "page": "Page {page}",
+      "summary": "{from}–{to} of {total}"
+    },
+    "scan": {
+      "run": "Run scan",
+      "starting": "Starting…",
+      "queued": "Scan queued",
+      "running": "Scanning… {progress}",
+      "done": "Scan complete. Results refreshed.",
+      "failed": "Scan failed.",
+      "startFailed": "Couldn't start the scan.",
+      "progressLabel": "Scan progress"
+    },
+    "toast": {
+      "toggleFailed": "Couldn't update “{prompt}”. Your change was undone.",
+      "dismiss": "Dismiss"
+    }
   }
 }
