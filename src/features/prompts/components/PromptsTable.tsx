@@ -4,6 +4,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 import { Pagination } from '@/features/prompts/components/Pagination';
 import { PromptsTableHead } from '@/features/prompts/components/PromptsTableHead';
+import { useSimulateFailures } from '@/features/prompts/components/SimulateFailures';
 import { PROMPTS_ROW_CLASS, PROMPTS_TABLE_CLASS } from '@/features/prompts/components/table-styles';
 import { TrackToggle } from '@/features/prompts/components/TrackToggle';
 import { usePromptFilters } from '@/features/prompts/queries/use-prompt-filters';
@@ -29,6 +30,7 @@ export function PromptsTable() {
   const locale = useLocale();
   const { filters, setFilters } = usePromptFilters();
   const { data, isPlaceholderData, isError } = usePrompts(filters);
+  const { simulateFailures } = useSimulateFailures();
   const [toast, setToast] = useState<ToastMessage | null>(null);
   const dismissToast = useCallback(() => {
     setToast(null);
@@ -59,7 +61,11 @@ export function PromptsTable() {
             tracked={row.tracked}
             label={t('table.trackLabel', { prompt: text })}
             onToggle={() => {
-              toggle.mutate({ promptId: row.id, tracked: !row.tracked });
+              toggle.mutate({
+                promptId: row.id,
+                tracked: !row.tracked,
+                simulateFailure: simulateFailures,
+              });
             }}
           />
         </td>

@@ -77,7 +77,8 @@
       "all": "Todos",
       "allEngines": "Todos los motores",
       "yes": "Sí",
-      "no": "No"
+      "no": "No",
+      "simulateFailures": "Simular fallos de ★"
     },
     "table": {
       "caption": "Prompts monitoreados",

@@ -77,7 +77,8 @@
       "all": "All",
       "allEngines": "All engines",
       "yes": "Yes",
-      "no": "No"
+      "no": "No",
+      "simulateFailures": "Simulate ★ failures"
     },
     "table": {
       "caption": "Tracked prompts",

@@ -9,7 +9,7 @@ import type { PromptFilters } from '@/features/prompts/types';
  * The URL is the single source of truth for filters: shareable, survives a
  * reload, and the server reads the same params for the first paint.
  *
- * Updates use the native `history.replaceState`, which Next syncs into
+ * Updates use the native `history.pushState`, which Next syncs into
  * `useSearchParams`, instead of `router.replace`. `router.replace` is a Next
  * navigation: it re-renders the page on the server (re-running the prefetch)
  * and only updates the URL hooks once that response arrives, so React Query
@@ -17,7 +17,12 @@ import type { PromptFilters } from '@/features/prompts/types';
  * API there is no server round trip: the key changes, React Query fetches
  * /api/prompts and keeps the old rows on screen meanwhile. "Next owns the first
  * paint, React Query owns everything after hydration."
- * `replace` (not `push`) so filter clicks don't pile up history entries.
+ *
+ * `push`, not `replace`, so back/forward step through filter and page states.
+ * Verified on a production build: Next stores its router tree in the entry
+ * it pushes, so popstate restores it on the client with no RSC request; the
+ * URL hooks update, the key changes, and React Query answers from its cache
+ * (or fetches /api/prompts with the old rows still on screen).
  */
 export function usePromptFilters() {
   const searchParams = useSearchParams();
@@ -25,7 +30,7 @@ export function usePromptFilters() {
 
   function setFilters(next: PromptFilters) {
     const query = filtersToSearchParams(next).toString();
-    window.history.replaceState(null, '', query ? `?${query}` : window.location.pathname);
+    window.history.pushState(null, '', query ? `?${query}` : window.location.pathname);
   }
 
   return { filters, setFilters };
