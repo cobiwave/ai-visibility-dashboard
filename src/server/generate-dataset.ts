@@ -10,6 +10,7 @@ import {
   type Sentiment,
   type Topic,
 } from '@/shared/config/domain';
+import { DEMO_BRAND_ID } from '@/shared/config/brand';
 import type { Locale } from '@/shared/config/locale';
 import { float, int, mulberry32, pick, type Rng } from '@/shared/lib/seed';
 
@@ -37,7 +38,7 @@ const COMPETITORS = [
 ] as const;
 
 const BRAND: Brand = {
-  id: 'northwind',
+  id: DEMO_BRAND_ID,
   name: 'Northwind Coffee',
   domain: 'northwindcoffee.com.ar',
   competitors: COMPETITORS.map((competitor) => competitor.name),

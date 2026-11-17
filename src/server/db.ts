@@ -7,16 +7,20 @@ import { DATASET_SEED, generateDataset } from '@/server/generate-dataset';
 // acceptable for a mock; in production this is a database.
 const dataset = generateDataset(DATASET_SEED);
 
-// Mutable state lives next to the read-only dataset, not inside it.
-const trackedById = new Map(dataset.prompts.map((prompt) => [prompt.id, prompt.tracked]));
-
-interface ScanRecord {
-  id: string;
-  startedAt: string;
+declare global {
+  // `var` is how a property is declared on globalThis in TypeScript.
+  var mockTrackedById: Map<string, boolean> | undefined;
 }
 
-const scansById = new Map<string, ScanRecord>();
-let scanCounter = 0;
+// Mutable state lives next to the read-only dataset, not inside it, and on
+// globalThis rather than in module scope: Next bundles Route Handlers
+// separately from pages and Server Actions, so a module-level Map exists once
+// per bundle. A ★ written by the action was invisible to GET /api/prompts.
+// globalThis is shared by every bundle in the process (still per instance).
+globalThis.mockTrackedById ??= new Map(
+  dataset.prompts.map((prompt) => [prompt.id, prompt.tracked]),
+);
+const trackedById = globalThis.mockTrackedById;
 
 const MIN_LATENCY_MS = 150;
 const MAX_LATENCY_MS = 400;
@@ -60,15 +64,4 @@ export function writeTracked(id: string, tracked: boolean): boolean {
   if (!trackedById.has(id)) return false;
   trackedById.set(id, tracked);
   return true;
-}
-
-export function insertScan(startedAt: string): ScanRecord {
-  scanCounter += 1;
-  const record = { id: `scan_${String(scanCounter)}`, startedAt };
-  scansById.set(record.id, record);
-  return record;
-}
-
-export function findScan(id: string): ScanRecord | null {
-  return scansById.get(id) ?? null;
 }

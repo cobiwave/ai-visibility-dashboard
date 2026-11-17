@@ -45,4 +45,6 @@ export interface Overview {
   kpis: OverviewKpis;
   series: EngineSeries[];
   engines: EngineBreakdown[];
+  /** ISO time the cached entry was built. Changes only when the cache regenerates. */
+  generatedAt: string;
 }
