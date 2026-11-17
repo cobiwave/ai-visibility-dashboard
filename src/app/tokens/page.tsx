@@ -38,6 +38,12 @@ const spacingTokens = [
   { name: '10 · 40px', className: 'p-10' },
 ] as const;
 
+const motionTokens = [
+  { name: 'duration-fast · 150ms', className: 'motion-safe:duration-fast' },
+  { name: 'duration-base · 250ms', className: 'motion-safe:duration-base' },
+  { name: 'duration-slow · 400ms', className: 'motion-safe:duration-slow' },
+] as const;
+
 export default function TokensPage() {
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 py-12">
@@ -106,6 +112,25 @@ export default function TokensPage() {
           <div className="border-border bg-surface-1 rounded-lg border p-4">Radius · lg</div>
           <div className="bg-surface-1 shadow-card rounded-md p-4">Shadow · card</div>
           <div className="bg-surface-1 shadow-popover rounded-md p-4">Shadow · popover</div>
+        </div>
+      </section>
+
+      <section aria-labelledby="motion-heading" className="flex flex-col gap-4">
+        <h2 className="text-xl font-semibold" id="motion-heading">
+          Motion · ease-out-quart
+        </h2>
+        <p className="text-text-muted text-sm">
+          Hover a box. Motion is disabled when the OS asks for reduced motion.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {motionTokens.map((token) => (
+            <div
+              className={`border-border bg-surface-1 motion-safe:ease-out-quart rounded-md border p-4 motion-safe:transition-transform motion-safe:hover:translate-x-4 ${token.className}`}
+              key={token.name}
+            >
+              {token.name}
+            </div>
+          ))}
         </div>
       </section>
     </main>

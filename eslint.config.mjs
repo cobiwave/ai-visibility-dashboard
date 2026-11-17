@@ -8,18 +8,29 @@ const typedConfigs = tseslint.configs.strictTypeChecked.map((config) =>
   config.files ? config : { ...config, files: ['**/*.{ts,tsx,mts,cts}'] },
 );
 
+// One config block per feature, with ALL its patterns in a single rule entry.
+// In flat config a later block that sets the same rule for the same files
+// replaces the earlier options instead of merging them.
 const featureBoundaryConfigs = featureNames.map((featureName) => ({
   files: [`src/features/${featureName}/**/*.{js,jsx,ts,tsx}`],
   rules: {
     'no-restricted-imports': [
       'error',
       {
-        patterns: featureNames
-          .filter((otherFeatureName) => otherFeatureName !== featureName)
-          .map((otherFeatureName) => ({
-            group: [`@/features/${otherFeatureName}`, `@/features/${otherFeatureName}/**`],
-            message: 'Features may import shared code, not another feature.',
-          })),
+        patterns: [
+          ...featureNames
+            .filter((otherFeatureName) => otherFeatureName !== featureName)
+            .map((otherFeatureName) => ({
+              group: [`@/features/${otherFeatureName}`, `@/features/${otherFeatureName}/**`],
+              message: 'Features may import shared code, not another feature.',
+            })),
+          {
+            // Relative imports that climb out of the current folder could
+            // reach another feature without matching the alias patterns.
+            group: ['../*', '../**'],
+            message: 'Use the @/ alias for anything outside the current folder.',
+          },
+        ],
       },
     ],
   },
