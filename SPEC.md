@@ -214,7 +214,7 @@ src/
     en.json  es.json
   styles/
     globals.css                  # @theme tokens
-proxy.ts                         # next-intl locale routing (Next 16 name for middleware)
+  proxy.ts                       # next-intl locale routing (Next 16 name for middleware; inside src/ because the app uses a src folder)
 ```
 
 **Rules:**
