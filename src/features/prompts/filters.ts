@@ -1,21 +1,27 @@
-import { z } from 'zod';
+import { z } from 'zod/mini';
 import type { PromptFilters } from '@/features/prompts/types';
 import { ENGINE_IDS, TOPICS } from '@/shared/config/domain';
 
 // One schema for every place that reads filters from a URL: the page (server),
-// GET /api/prompts and the client hooks. Each field has its own `.catch`, so an
-// invalid value falls back to its default instead of failing the whole parse:
-// `?topic=nope&page=2` still gives page 2.
+// GET /api/prompts and the client hooks. Each field is wrapped in its own
+// `z.catch`, so an invalid value falls back to its default instead of failing
+// the whole parse: `?topic=nope&page=2` still gives page 2.
+// `zod/mini` (functions instead of chained methods) because this file ships
+// to the browser: it tree-shakes, full `zod` doesn't.
 const promptFiltersSchema = z.object({
-  engine: z.enum(ENGINE_IDS).optional().catch(undefined),
-  topic: z.enum(TOPICS).optional().catch(undefined),
-  mentioned: z
-    .enum(['true', 'false'])
-    .transform((value) => value === 'true')
-    .optional()
-    .catch(undefined),
+  engine: z.catch(z.optional(z.enum(ENGINE_IDS)), undefined),
+  topic: z.catch(z.optional(z.enum(TOPICS)), undefined),
+  mentioned: z.catch(
+    z.optional(
+      z.pipe(
+        z.enum(['true', 'false']),
+        z.transform((value) => value === 'true'),
+      ),
+    ),
+    undefined,
+  ),
   // Missing → Number(undefined) is NaN → fails int() → falls back to 1.
-  page: z.coerce.number().int().min(1).max(1000).catch(1),
+  page: z.catch(z.pipe(z.coerce.number(), z.int().check(z.minimum(1), z.maximum(1000))), 1),
 });
 
 /** What Next passes as `searchParams`, or URLSearchParams on the client / in Route Handlers. */

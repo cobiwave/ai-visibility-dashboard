@@ -94,8 +94,8 @@ Interviewers will use the old vocabulary. Map it explicitly:
 |---|---|---|---|
 | Landing `/[locale]` | **SSG** | Content changes only on deploy. Served straight from the CDN, best TTFB and LCP. | Copy changes need a redeploy (fine for marketing). |
 | Overview `/[locale]/dashboard` | **Static shell + ISR data** (`cacheLife('hours')`, tag `metrics:northwind`) + **on-demand** via webhook | Metrics change when a scan batch finishes, not per request. The webhook is the "scan pipeline finished" signal. | Up to 1h stale if a webhook is missed. That's acceptable for analytics, and the webhook makes the normal case near-instant. |
-| Prompts `/[locale]/dashboard/prompts` | **PPR**: static shell (header, filter bar skeleton) + **dynamic** table region driven by `searchParams`, **prefetched into React Query on the server** and hydrated on the client | Filters live in the URL, so it's shareable, SSR'd, and back/forward work. The client then owns pagination, polling and mutations. | Two caches (Next + React Query). Rule: Next owns the first paint, React Query owns everything after hydration. |
-| Prompt detail `/[locale]/dashboard/prompts/[promptId]` | **SSG for the top 20 prompts** (`generateStaticParams`), the rest rendered on first request then cached (ISR), tag `prompt:{id}` | Popular pages are instant from the start. The long tail doesn't bloat build time. | The first visitor to a long-tail prompt pays the render cost. |
+| Prompts `/[locale]/dashboard/prompts` | **PPR**: static shell (header, filter bar skeleton) + **dynamic** table region driven by `searchParams`, **prefetched into React Query on the server** and hydrated on the client | Filters live in the URL, so it's shareable, SSR'd, and back/forward work. The client updates the URL with the History API (`history.pushState`, which Next syncs into `useSearchParams`), not `router.replace`, so changing a filter never re-renders on the server. The client then owns pagination, polling and mutations. | Two caches (Next + React Query). Rule: Next owns the first paint, React Query owns everything after hydration. |
+| Prompt detail `/[locale]/dashboard/prompts/[promptId]` | **SSG for the top 20 prompts** (`generateStaticParams`), the rest rendered on first request then cached (ISR), tag `prompt:{id}` | Popular pages are instant from the start. The long tail doesn't bloat build time. | The first visitor to a long-tail prompt pays the render cost. An unknown id renders the translated not-found UI with `noindex`, but the status is `200`: the prerendered shell has already started streaming (a true `404` needs a Proxy check). |
 | `POST /api/revalidate` | Route Handler, **secret in header** (`x-revalidate-secret`), timing-safe compare, Zod-validated body `{ tags: string[] }`, allow-listed tag prefixes | Simulates the scan pipeline webhook. | Shared secret instead of HMAC signature: simpler, but no replay protection. Name HMAC + timestamp as the production upgrade. |
 | `GET /api/prompts`, `GET /api/scans/[id]` | Route Handlers, `Cache-Control: private, no-store` | React Query's client-side reads. Tenant data must never land in a shared CDN cache. | No CDN help for these, so we rely on React Query's client cache. |
 
@@ -180,15 +180,18 @@ cold start. That's acceptable for a mock. In production it's a database.
 src/
   app/
     [locale]/
-      layout.tsx                 # html lang, fonts, NextIntlClientProvider, setRequestLocale
-      page.tsx                   # landing (SSG)
+      layout.tsx                 # html lang, fonts, NextIntlClientProvider (locale from next/root-params, no setRequestLocale)
+      page.tsx                   # redirects to /[locale]/dashboard (landing cut, SPEC §0)
       dashboard/
         layout.tsx               # sidebar + topbar (static)
-        page.tsx                 # overview
-        loading.tsx
+        (overview)/              # route group: loading.tsx wraps only the overview
+          page.tsx               # overview
+          loading.tsx
         prompts/
           page.tsx               # prefetch + HydrationBoundary
-          [promptId]/page.tsx
+          [promptId]/
+            page.tsx             # generateStaticParams (top 20)
+            not-found.tsx
     api/
       revalidate/route.ts
       prompts/route.ts
@@ -222,8 +225,8 @@ src/
   `shared/`. Cross-feature composition happens in `app/`.
 - `server/` and `features/*/server/` start with `import 'server-only'`.
 - `'use client'` only on leaves: `FiltersBar`, `PromptsTable`, `TrackToggle`,
-  `ScanButton`, `LocaleSwitcher`, `Hero`, `AnswerAccordion` (only if CSS
-  alone can't do it).
+  `ScanButton`, `LocaleSwitcher`, `Hero`, `ExcerptToggle` (holds only the
+  expanded boolean; the excerpt is server-rendered children).
 
 ---
 

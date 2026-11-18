@@ -68,6 +68,24 @@
   transition-duration: var(--duration-slow);
 }
 
+/*
+ * Expandable excerpt (grid-rows trick): a grid row can transition between
+ * fr values, unlike `height: auto`. `minmax(2lh, …)` keeps two lines visible
+ * when collapsed (`lh` = the element's own line height); `0fr` → `1fr` grows
+ * the row to the content's full height.
+ */
+@utility grid-rows-peek {
+  grid-template-rows: minmax(2lh, 0fr);
+}
+
+@utility grid-rows-open {
+  grid-template-rows: minmax(2lh, 1fr);
+}
+
+@utility transition-grid-rows {
+  transition-property: grid-template-rows;
+}
+
 :root {
   color-scheme: dark;
   background: var(--color-surface-0);

@@ -5,6 +5,7 @@ import { FiltersBar } from '@/features/prompts/components/FiltersBar';
 import { PromptsSkeleton } from '@/features/prompts/components/PromptsSkeleton';
 import { PromptsTable } from '@/features/prompts/components/PromptsTable';
 import { ScanButton } from '@/features/prompts/components/ScanButton';
+import { SimulateFailuresProvider } from '@/features/prompts/components/SimulateFailures';
 import { parsePromptFilters } from '@/features/prompts/filters';
 import { promptKeys } from '@/features/prompts/queries/keys';
 import { listPrompts } from '@/features/prompts/server/list-prompts';
@@ -32,10 +33,12 @@ async function PromptsResults({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="flex flex-col gap-4">
-        <FiltersBar />
-        <PromptsTable />
-      </div>
+      <SimulateFailuresProvider>
+        <div className="flex flex-col gap-4">
+          <FiltersBar />
+          <PromptsTable />
+        </div>
+      </SimulateFailuresProvider>
     </HydrationBoundary>
   );
 }
