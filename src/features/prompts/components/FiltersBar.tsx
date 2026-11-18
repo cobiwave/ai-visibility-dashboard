@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
+import { useSimulateFailures } from '@/features/prompts/components/SimulateFailures';
 import { filtersToSearchParams, parsePromptFilters } from '@/features/prompts/filters';
 import { usePromptFilters } from '@/features/prompts/queries/use-prompt-filters';
 import type { PromptFilters } from '@/features/prompts/types';
@@ -24,6 +25,7 @@ export function FiltersBar() {
   const t = useTranslations('Prompts.filters');
   const tTopics = useTranslations('Topics');
   const { filters, setFilters } = usePromptFilters();
+  const { simulateFailures, setSimulateFailures } = useSimulateFailures();
 
   // Go through the URL format and back through the same zod schema, so a
   // <select> value never needs a cast. Changing a filter resets to page 1.
@@ -88,6 +90,20 @@ export function FiltersBar() {
           <option value="false">{t('no')}</option>
         </select>
       </Field>
+      {/* A native checkbox with role="switch": keyboard and screen-reader
+          support for free, announced as "on/off" instead of "checked". */}
+      <label className="ml-auto flex h-9 items-center gap-2 self-end text-sm">
+        <input
+          type="checkbox"
+          role="switch"
+          className="accent-danger size-4"
+          checked={simulateFailures}
+          onChange={(event) => {
+            setSimulateFailures(event.target.checked);
+          }}
+        />
+        <span className="text-text-muted">{t('simulateFailures')}</span>
+      </label>
     </form>
   );
 }

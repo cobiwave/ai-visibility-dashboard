@@ -8,6 +8,7 @@ import type { Paginated, PromptRow } from '@/features/prompts/types';
 interface ToggleVariables {
   promptId: string;
   tracked: boolean;
+  simulateFailure: boolean;
 }
 
 function patchTracked(

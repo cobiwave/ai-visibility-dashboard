@@ -4,6 +4,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 import { Pagination } from '@/features/prompts/components/Pagination';
 import { PromptsTableHead } from '@/features/prompts/components/PromptsTableHead';
+import { useSimulateFailures } from '@/features/prompts/components/SimulateFailures';
 import { PROMPTS_ROW_CLASS, PROMPTS_TABLE_CLASS } from '@/features/prompts/components/table-styles';
 import { TrackToggle } from '@/features/prompts/components/TrackToggle';
 import { usePromptFilters } from '@/features/prompts/queries/use-prompt-filters';
@@ -11,16 +12,10 @@ import { usePrompts } from '@/features/prompts/queries/use-prompts';
 import { useToggleTracked } from '@/features/prompts/queries/use-toggle-tracked';
 import type { PromptRow } from '@/features/prompts/types';
 import { Link } from '@/i18n/navigation';
-import type { Sentiment } from '@/shared/config/domain';
 import { cn } from '@/shared/lib/cn';
 import { formatNumber } from '@/shared/lib/format';
+import { SENTIMENT_TEXT_COLOR } from '@/shared/ui/sentiment-color';
 import { Toast, type ToastMessage } from '@/shared/ui/Toast';
-
-const SENTIMENT_COLOR: Record<Sentiment, string> = {
-  positive: 'text-success',
-  neutral: 'text-warning',
-  negative: 'text-danger',
-};
 
 export function PromptsTable() {
   const t = useTranslations('Prompts');
@@ -29,6 +24,7 @@ export function PromptsTable() {
   const locale = useLocale();
   const { filters, setFilters } = usePromptFilters();
   const { data, isPlaceholderData, isError } = usePrompts(filters);
+  const { simulateFailures } = useSimulateFailures();
   const [toast, setToast] = useState<ToastMessage | null>(null);
   const dismissToast = useCallback(() => {
     setToast(null);
@@ -59,7 +55,11 @@ export function PromptsTable() {
             tracked={row.tracked}
             label={t('table.trackLabel', { prompt: text })}
             onToggle={() => {
-              toggle.mutate({ promptId: row.id, tracked: !row.tracked });
+              toggle.mutate({
+                promptId: row.id,
+                tracked: !row.tracked,
+                simulateFailure: simulateFailures,
+              });
             }}
           />
         </td>
@@ -88,7 +88,7 @@ export function PromptsTable() {
                 aria-hidden
                 className={cn(
                   'size-2 rounded-full bg-current',
-                  SENTIMENT_COLOR[row.dominantSentiment],
+                  SENTIMENT_TEXT_COLOR[row.dominantSentiment],
                 )}
               />
               {tSentiments(row.dominantSentiment)}
